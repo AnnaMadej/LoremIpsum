@@ -1,0 +1,420 @@
+*html{
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family : 'Montserrat', sans-serif;
+    font-size   : 16px;
+    line-height : 26px;
+    color       : #fff;
+    font-weight : 400;
+    background: #333;
+    margin: 0;
+    }
+
+/*--------------------------------------
+ * TYPOGRAPHY  
+ *--------------------------------------*/
+
+h1 {
+    font-size   : 60px;
+    line-height: 1;
+    margin: 0;
+    text-transform: capitalize;
+    }
+h2{
+    font-size: 24px;
+    font-weight: normal;
+    text-transform: capitalize;
+}
+
+/*--------------------------------------
+ * LINK STYLE 
+ *-------------------------------------- */
+a {
+    color: #fff;
+    text-decoration : none;
+    }
+
+
+a,
+a:active,
+a:focus,
+a:active {
+    text-decoration : none;
+    outline         : none
+    }
+
+a:hover,
+a:focus {
+    text-decoration : none;
+    }
+
+
+/*-------------------------------------------------------------
+ * Main Wraper
+ *-------------------------------------------------------------*/
+ .wraper{
+    padding: 1%;
+    color: #fff;
+}
+
+
+/*-------------------------------------------------------------
+ * HEADER
+ *-------------------------------------------------------------*/
+.header{
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+
+/*-------------------------------------------------------------
+ * Countdown
+ *-------------------------------------------------------------*/
+.countdown-wrapper {
+    margin: auto;
+}
+
+#back-countdiown{
+    text-align: center;
+    padding: 0;
+}
+
+#back-countdiown li {
+    display: inline-block;
+    min-width: 150px;
+    text-align: center;
+    border: 3px solid rgba(255,255,255,.7);
+    border-radius: 2%;
+    position: relative;
+}
+
+@media screen and (max-width:767px){
+    #back-countdiown li{
+       width: 90%;
+       margin-bottom: 20px;
+    }
+}
+
+
+#back-countdiown li:last-child {
+  margin-right: 0
+}
+#back-countdiown li span {
+    display: block;
+    font-size: 20px;
+    padding: 4px;
+    font-weight: 500;
+}
+#back-countdiown li p{
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 200;
+    margin: 0;
+    padding: 4px;
+    color: #fff;
+    border-top: 1px solid rgba(255,255,255,.7);
+}
+
+
+/*-------------------------------------------------------------
+ * Generator
+ *-------------------------------------------------------------*/
+#generatorHeader{
+    font-size: 12px;
+    margin-bottom: 5%;
+    height: 80px;
+}
+#generatorHeader .left{
+    float:left;
+    width:80%;
+    text-align: left;
+    overflow:hidden;
+}
+#generatorHeader .right{
+    float:left;
+    text-align: right;
+    width:20%;
+    overflow:hidden;
+}
+
+.lorem-form{
+    width: 90%;
+    position: relative;
+}
+
+#parArea{
+    padding: 5%;
+    text-align: center;
+    width:100%;
+    margin: 0;
+    border: 2px solid rgba(255,255,255,.5);
+    background:transparent;
+    border-radius:3px;
+    font-size:18px;
+    line-height: 18px;
+    color: #fff;
+    min-width: 150px;
+}
+
+.countdown-wrapper p{
+    text-align: center;
+    font-size:18px;
+}
+.lorem-form input[type="number"]{
+    -moz-appearance: textfield;
+    width: 5em;
+}
+.lorem-form select{
+    width: 10em;
+}
+
+.lorem-form input[type="number"], .lorem-form select{
+    height: 30px;
+    line-height: 30px;
+    background:rgba(255,255,255,0.2);
+    border-radius:3px;
+    border: 0;
+    font-size:18px;
+    color: #ccc;
+    text-align: center;
+}
+
+.lorem-form select{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-align-last:center;;
+    text-indent: 1px;
+    text-overflow: '';
+}
+
+.lorem-form  select option {
+    text-align: center;
+    border-radius:3px;
+    border: 0;
+    background: rgba(0, 0, 0, 0.2);
+    color: black;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+#paragraphs{
+    margin-left: 5%;
+    margin-bottom: 5%;
+    text-align: justify;
+    white-space: normal;
+    padding: 3%;
+    border: 2px solid rgba(255,255,255,.5);
+    width: 90%;
+    height: 100%;
+    background:rgba(255,255,255,0.7);
+    border-radius:3px;
+    font-size:18px;
+    line-height: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+    color: black;
+}
+
+.lorem-form input:focus{
+    outline:none;
+}
+
+.lorem-form  li{
+    list-style: none;
+    display: inline;
+    padding: 0;
+}
+
+@media screen and (max-width:767px) {
+    .lorem-form  li{
+        display: block;
+    }
+}
+
+
+lorem-form fieldset, .lorem-form ul{
+    margin:2%;
+    padding: 0;
+}
+
+
+.lorem-form input[type="submit"] {
+    margin-top: 2%;
+    margin-bottom: 1%;
+    width: 100%;
+    border-radius:3px;
+    border: 2px solid rgba(255,255,255,.5);
+    cursor: pointer;
+    background: #ff0000;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    height: 40px;
+    line-height: 40px;
+    display: block;
+}
+
+
+.lorem-form::-webkit-input-placeholder {
+    color:   #fff;
+    font-size: 10px;
+}
+
+hr{
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+/*------------------
+ * Video Background
+ *------------------*/
+
+.fullscreen-bg {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: -100;
+}
+
+.fullscreen-bg::before{
+    position: absolute;
+    content: "";
+    background: rgba(0, 0, 0, 0.7);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+.fullscreen-bg__video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@media (min-aspect-ratio: 16/9) {
+  .fullscreen-bg__video {
+    height: 300%;
+    top: -100%;
+  }
+}
+
+@media (max-aspect-ratio: 16/9) {
+  .fullscreen-bg__video {
+    width: 300%;
+    left: -100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .fullscreen-bg {
+    background: url('../img/videoframe.jpg') center center / cover no-repeat;
+  }
+
+  .fullscreen-bg__video {
+    display: none;
+  }
+}
+
+
+/*-----------------------
+ * Footer
+ *-----------------------*/
+.footer{
+    position: relative;
+    display: block;
+    bottom: auto;
+    left: auto;
+}
+
+
+/*social-links*/
+.social-links ul{
+    margin: 0;
+    padding: 0;
+}
+
+.social-links li{
+    list-style: none;
+    display: inline-block;
+    margin-right: 10px;
+}
+.social-links li a{
+    display: block;
+    font-size: 18px;
+    color: rgba(255,255,255,.3);
+    text-align: center;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    transition: all 0.5s;
+}
+.social-links li a:hover {
+    color: #fff;
+}
+
+
+/*copyright*/
+.copyright{
+    margin-top: 10px;
+    font-size: 12px;
+    color: rgba(255,255,255,.3);
+    padding: 0;
+    line-height: 1;
+}
+
+.copyright a{
+    color: rgba(255,255,255, 0.3);
+    text-decoration    : none;
+    border-bottom: 1px dotted rgba(255,255,255, 0.3);
+}
+.copyright li{
+    display: inline-block;
+    margin-right: 10px;
+}
+
+
+.copyright li:last-child{
+    border-left: 1px solid rgba(255,255,255,.2);
+    padding-left: 12px;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #ffffff;
+    font-size: 10px;
+    text-decoration: underline;
+}
+::-moz-placeholder { /* Firefox 19+ */
+    color: #ffffff;
+    font-size: 10px;
+    text-decoration: underline;
+}
+:-ms-input-placeholder { /* IE 10+ */
+    color: #ffffff;
+    font-size: 10px;
+    text-decoration: underline;
+}
+:-moz-placeholder { /* Firefox 18- */
+    color: #ffffff;
+    font-size: 10px;
+    text-decoration: underline;
+}

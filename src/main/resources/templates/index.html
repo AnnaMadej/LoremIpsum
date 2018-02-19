@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Lorem ipsum generator</title>
+
+    <!-- web-fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <!-- font-awesome -->
+    <link th:href="@{/fonts/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+    <!-- Style CSS -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+    <![endif]-->
+
+    <script type="text/javascript">
+
+        function CopyToClipboard(containerid) {
+            if (document.selection) {
+                var range = document.body.createTextRange();
+                range.moveToElementText(document.getElementById(containerid));
+                range.select().createTextRange();
+                document.execCommand("copy");
+
+            } else if (window.getSelection) {
+                var range = document.createRange();
+                range.selectNode(document.getElementById(containerid));
+                window.getSelection().addRange(range);
+                document.execCommand("copy");
+            }}
+
+    </script>
+</head>
+<body>
+<div class="fullscreen-bg">
+    <video loop muted autoplay th:poster="@{/img/videoframe.jpg}" class="fullscreen-bg__video">
+        <source th:src="@{/img/video-bg.mp4}" type="video/mp4">
+    </video>
+</div> <!-- .fullscreen-bg -->
+<section class="wraper">
+    <header class="header">
+        <h1><a th:href="@{/}">LOREM IPSUM</a></h1>
+        <h2>GENERATOR</h2>
+    </header>
+    <!-- .header -->
+    <section class="generator">
+        <div id="paragraphs" th:if="${error==false}">
+            <div id="generatorHeader">
+                <div class="left">
+                <p><span th:text="#{words_message} + ': ' + ${generatedTextModel.getNumberOfWords()} + ',  '" ></span>
+                <span th:text="#{sentences_message} + ': ' + ${generatedTextModel.getNumberOfSentences()} + ',  '" ></span>
+                <span th:text="#{paragraphs_message} + ': ' + ${generatedTextModel.getNumberOfParagraphs()} + '.  '"></span></p>
+                <p><button id="button1" onclick="CopyToClipboard('generatorBody')" th:text="#{copy_message}"></button></p>
+                </div>
+                <div class="right">
+                <a th:href="@{/}"><button aria-hidden="true" >&times;</button></a>
+            </div>
+            </div>
+            <div id="generatorBody">
+                <th:block th:each="paragraph : ${paragraphs}">
+                    <p th:text="${paragraph}"></p>
+                </th:block>
+            </div>
+        </div>
+
+        <form th:if="${error != false}" class="lorem-form" role="form" method="POST" th:object="${loremFormModel}" th:action="@{/}">
+            <div id="parArea">
+                <fieldset>
+                    <legend align="left" th:text="#{content.message} +': ' "></legend>
+                    <label for="numberOf" th:text="#{paragraph_number_message} +': ' "> </label>
+                    <input type="number" th:placeholder="${error == true?'WPISZ LICZBĘ!' : null}" class="form-control" id="numberOf" name="numberOf" th:field="*{numberOf}" min="1" max="1000">
+                    <p><label for="content" th:text="#{type_message} +': ' "></label>
+                        <select th:field="*{content}" name="content" id="content">
+                            <option value="lorem">Lorem Ipsum</option>
+                            <option value="got">Game Of Thrones</option>
+                        </select></p>
+                </fieldset>
+                <fieldset>
+                    <legend align="left" th:text="#{size_message} +': ' "></legend>
+                    <p th:text="#{paragraph_length_message} +': ' "></p>
+                    <ul>
+                        <li><input name="parLength" type="radio" value="mixedParSize" id="mixedParSize"th:field="*{parLength}" checked><label for="mixedParSize" th:text="#{mixed_message}"></label></li>
+                        <li><input name="parLength" type="radio" value="shortParSize" id="shortParSize" th:field="*{parLength}"><label for="shortParSize" th:text="#{small_message}"></label></li>
+                        <li><input name="parLength" type="radio" value="mediumParSize" id="mediumParSize" th:field="*{parLength}"><label for="mediumParSize" th:text="#{medium_message}"></label></li>
+                        <li><input name="parLength" type="radio" value="longParSize" id="longParSize" th:field="*{parLength}"><label for="longParSize" th:text="#{long_message}"></label></li>
+                    </ul>
+                    <hr>
+                    <p th:text="#{sentence_length_message} +': ' "> </p>
+                    <ul>
+                        <li><input name="senLength" type="radio" value="mixedSenSize" id="mixedSenSize" th:field="*{senLength}" checked/><label for="mixedSenSize" th:text="#{mixed_message}"></label></li>
+                        <li><input name="senLength" type="radio" value="shortSenSize" id="shortSenSize" th:field="*{senLength}"/><label for="shortSenSize" th:text="#{small_message}"></label></li>
+                        <li><input name="senLength" type="radio" value="mediumSenSize" id="mediumSenSize" th:field="*{senLength}"/><label for="mediumSenSize" th:text="#{medium_message}"></label></li>
+                        <li><input name="senLength" type="radio" value="longSenSize" id="longSenSize" th:field="*{senLength}"  /><label for="longSenSize" th:text="#{long_message}"></label></li>
+                    </ul>
+                </fieldset>
+
+                <input type="submit" th:value="#{generate_message}" class="form-control"/>
+
+            </div>
+
+        </form>
+    </section>
+    <section class="countdown-wrapper">
+        <p th:text="#{already_generated_message} + ': '"></p>
+        <ul id="back-countdiown" th:object="${statisticsTableModel}">
+            <li>
+                <span class="paragraphs" th:text="*{sumOfParagraphs}"></span>
+                <p th:text="#{paragraphs_message}"></p>
+            </li>
+            <li>
+                <span class="sentences" th:text="*{sumOfSentences}">0</span>
+                <p th:text="#{sentences_message}" > </p>
+            </li>
+            <li>
+                <span class="words" th:text="*{sumOfWords}"></span>
+                <p th:text="#{words_message}"></p>
+            </li>
+        </ul>
+    </section>
+
+    <footer class="footer">
+
+        <section class="social-links">
+            <ul>
+                <li><a href="https://github.com/AnnaMadej/loremipsum" target="_blank"><i class="fa fa-github fa-2x"></i></a></li>
+            </ul>
+        </section><!-- /.social-links -->
+
+    </footer>
+</section>
+
+
+
+
+</body>
+</html>
