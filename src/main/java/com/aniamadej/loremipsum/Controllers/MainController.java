@@ -4,11 +4,12 @@ import com.aniamadej.loremipsum.Models.Forms.LoremFormModel;
 import com.aniamadej.loremipsum.Models.TextScheme;
 import com.aniamadej.loremipsum.Repositories.GeneratedTextDescriptionRepository;
 import com.aniamadej.loremipsum.Services.ContentCounterService;
-import com.aniamadej.loremipsum.Services.TextBuilderService;
+import com.aniamadej.loremipsum.Services.LoremBuilder;
 import com.aniamadej.loremipsum.Models.Dtos.StatisticsModel;
 import com.aniamadej.loremipsum.Services.FormToTextSchemeMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,14 +24,17 @@ import java.util.List;
 public class MainController {
 
     private GeneratedTextDescriptionRepository generatedTextDescriptionRepository;
-    private TextBuilderService textBuilderService;
+    private LoremBuilder<List<StringBuilder>> loremBuilder;
     private FormToTextSchemeMapper formToTextSchemeMapper;
     private ContentCounterService contentCounterService;
 
     @Autowired
-    public MainController(GeneratedTextDescriptionRepository generatedTextDescriptionRepository, TextBuilderService textBuilderService, FormToTextSchemeMapper formToTextSchemeMapper, ContentCounterService contentCounterService) {
+    public MainController(GeneratedTextDescriptionRepository generatedTextDescriptionRepository,
+                          @Qualifier("TEXT_BUILDER")LoremBuilder loremBuilder,
+                          FormToTextSchemeMapper formToTextSchemeMapper,
+                          ContentCounterService contentCounterService) {
         this.generatedTextDescriptionRepository = generatedTextDescriptionRepository;
-        this.textBuilderService = textBuilderService;
+        this.loremBuilder = loremBuilder;
         this.formToTextSchemeMapper = formToTextSchemeMapper;
         this.contentCounterService = contentCounterService;
     }
@@ -59,7 +63,7 @@ public class MainController {
         else {
             model.addAttribute("error", false );
             TextScheme textScheme = formToTextSchemeMapper.mapp(loremFormModel);
-            List<StringBuilder> text = textBuilderService.build(textScheme);
+            List<StringBuilder> text = loremBuilder.build(textScheme);
 
             model.addAttribute("paragraphs", text);
 

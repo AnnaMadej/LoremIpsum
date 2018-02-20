@@ -14,29 +14,37 @@ import java.util.List;
 public class TextBuilderService implements LoremBuilder<List<StringBuilder>>{
 
     private ContentCounterService contentCounterService;
-    private ParagraphBuilderService paragraphBuilderService;
+    private LoremBuilder<StringBuilder> loremBuilder;
 
     @Autowired
     public TextBuilderService(ContentCounterService contentCounterService,
-                              ParagraphBuilderService paragraphBuilderService) {
+                              @Qualifier("PARAGRAPH_BUILDER") LoremBuilder loremBuilder) {
         this.contentCounterService = contentCounterService;
-        this.paragraphBuilderService = paragraphBuilderService;
+        this.loremBuilder = loremBuilder;
     }
 
     public List<StringBuilder> build(TextScheme textScheme){
         List<StringBuilder> text = new ArrayList<>();
         StringBuilder paragraph;
-        paragraph = paragraphBuilderService.build(textScheme);
-        paragraphBuilderService.makeFirstParagraph(paragraph,textScheme);
+        paragraph = loremBuilder.build(textScheme);
+        addStartingPhrase(paragraph,textScheme);
         text.add(paragraph);
 
         for (int i = 1; i <  textScheme.getTotalParagraphs(); i++){
-            paragraph = paragraphBuilderService.build(textScheme);
+            paragraph = loremBuilder.build(textScheme);
             text.add(paragraph);
         }
         contentCounterService.incNumberOfParagraphs(textScheme.getTotalParagraphs());
         return text;
     }
+
+    public void addStartingPhrase(StringBuilder paragraph, TextScheme textScheme){
+        String phrase = textScheme.getWordsType().getStartingPhrase();
+        paragraph.setCharAt(0, Character.toLowerCase( paragraph.charAt(0)));
+        paragraph.insert(0, phrase + " ");
+        contentCounterService.incNumberOfWords(phrase.split("\\w+").length);
+    }
+
 
 
 

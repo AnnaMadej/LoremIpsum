@@ -12,12 +12,13 @@ import java.security.SecureRandom;
 public class ParagraphBuilderService implements LoremBuilder<StringBuilder>{
 
     private ContentCounterService contentCounterService;
-    private SentenceBuilderService sentenceBuilderService;
+    private  LoremBuilder<StringBuilder>  loremBuilder;
 
     @Autowired
-    public ParagraphBuilderService(ContentCounterService contentCounterService, SentenceBuilderService sentenceBuilderService) {
+    public ParagraphBuilderService(ContentCounterService contentCounterService,
+                                   @Qualifier("SENTENCE_BUILDER") LoremBuilder loremBuilder) {
         this.contentCounterService = contentCounterService;
-        this.sentenceBuilderService = sentenceBuilderService;
+        this.loremBuilder = loremBuilder;
     }
 
     @Override
@@ -26,19 +27,13 @@ public class ParagraphBuilderService implements LoremBuilder<StringBuilder>{
         SecureRandom rand = new SecureRandom();
         int numbeOfSentences = rand.nextInt(textScheme.getMaxParSize())+ textScheme.getMinParSize();
         for (int i = 0; i<numbeOfSentences; i++){
-            paragraph.append(sentenceBuilderService.build(textScheme));
+            paragraph.append(loremBuilder.build(textScheme));
         }
         contentCounterService.incNumberOfSentences(numbeOfSentences);
         return paragraph;
     }
 
-    public void addStartingPhrase(StringBuilder paragraph, String phrase){
-        paragraph.setCharAt(0, Character.toLowerCase( paragraph.charAt(0)));
-        paragraph.insert(0, phrase + " ");
-        contentCounterService.incNumberOfWords(phrase.split("\\w+").length);
-    }
 
-    public void makeFirstParagraph(StringBuilder paragraph, TextScheme textScheme){
-        addStartingPhrase(paragraph, textScheme.getWordsType().getStartingPhrase());
-    }
+
+
 }
