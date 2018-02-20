@@ -26,10 +26,10 @@ public class ListController {
     public String generateList(Model model){
         List<GeneratedTextDescriptionEntity> textsEntities = generatedTextDescriptionRepository.findAll();
         ModelMapper textsToDto = new ModelMapper();
-        StatisticsModel statisticsModel = new StatisticsModel();
         List<StatisticsModel> texts = new ArrayList<>();
-
+        StatisticsModel statisticsModel;
         for (GeneratedTextDescriptionEntity textEntity : textsEntities){
+            statisticsModel = new StatisticsModel();
             textsToDto.map(textEntity, statisticsModel);
             texts.add(statisticsModel);
         }
