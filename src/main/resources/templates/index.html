@@ -56,14 +56,14 @@
         <div id="paragraphs" th:if="${error==false}">
             <div id="generatorHeader">
                 <div class="left">
-                <p><span th:text="#{words_message} + ': ' + ${textStatistics.getNumberOfWords()} + ',  '" ></span>
-                <span th:text="#{sentences_message} + ': ' + ${textStatistics.getNumberOfSentences()} + ',  '" ></span>
-                <span th:text="#{paragraphs_message} + ': ' + ${textStatistics.getNumberOfParagraphs()} + '.  '"></span></p>
-                <p><button id="button1" onclick="CopyToClipboard('generatorBody')" th:text="#{copy_message}"></button></p>
+                    <p><span th:text="#{words_message} + ': ' + ${textStatistics.getNumberOfWords()} + ',  '" ></span>
+                        <span th:text="#{sentences_message} + ': ' + ${textStatistics.getNumberOfSentences()} + ',  '" ></span>
+                        <span th:text="#{paragraphs_message} + ': ' + ${textStatistics.getNumberOfParagraphs()} + '.  '"></span></p>
+                    <p><button id="button1" onclick="CopyToClipboard('generatorBody')" th:text="#{copy_message}"></button></p>
                 </div>
                 <div class="right">
-                <a th:href="@{/}"><button aria-hidden="true" >&times;</button></a>
-            </div>
+                    <a th:href="@{/}"><button aria-hidden="true" >&times;</button></a>
+                </div>
             </div>
             <div id="generatorBody">
                 <th:block th:each="paragraph : ${paragraphs}">
@@ -111,7 +111,7 @@
     </section>
 
 
-    <section th:replace="/Fragments/statisticsTable :: statisticsTable"></section>
+    <div th:replace="fragments/table :: table"></div>
     <footer class="footer">
 
         <section class="social-links">

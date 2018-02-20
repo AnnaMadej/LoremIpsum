@@ -64,31 +64,31 @@
             </div>
             <div id="generatorBody">
 
-               <table>
-                   <thead>
-                   <tr>
-                       <th th:text="#{time_message}"> </th>
-                       <th th:text="#{paragraphs_message}"> </th>
-                       <th th:text="#{sentences_message}" > </th>
-                       <th th:text="#{words_message}"> </th>
+                <table>
+                    <thead>
+                    <tr>
+                        <th th:text="#{time_message}"> </th>
+                        <th th:text="#{paragraphs_message}"> </th>
+                        <th th:text="#{sentences_message}" > </th>
+                        <th th:text="#{words_message}"> </th>
 
-                   </tr>
-                   <tr th:each="text : ${texts}">
-                       <td th:text="${#dates.format(text.added, 'yyyy-MM-dd hh:mm:ss')}"> </td>
-                       <td th:text="${text.numberOfParagraphs}"> </td>
-                       <td th:text="${text.numberOfSentences}"> </td>
-                       <td th:text="${text.numberOfWords}"> </td>
-                   </tr>
+                    </tr>
+                    <tr th:each="text : ${texts}">
+                        <td th:text="${#dates.format(text.added, 'yyyy-MM-dd hh:mm:ss')}"> </td>
+                        <td th:text="${text.numberOfParagraphs}"> </td>
+                        <td th:text="${text.numberOfSentences}"> </td>
+                        <td th:text="${text.numberOfWords}"> </td>
+                    </tr>
 
-                   </thead>
-               </table>
+                    </thead>
+                </table>
             </div>
         </div>
     </section>
 
 
 
-    <section th:replace="/Fragments/statisticsTable :: statisticsTable"></section>
+    <div th:replace="fragments/table :: table"></div>
     <footer class="footer">
 
         <section class="social-links">

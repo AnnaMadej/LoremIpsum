@@ -24,7 +24,8 @@
 </head>
 <body>
 
-    <section th:fragment="statisticsTable" class="countdown-wrapper">
+<div  th:fragment="table" >
+    <section class="countdown-wrapper">
         <p><a th:href="@{/list}" th:text="#{already_generated_message} + ': '"></a></p>
         <ul id="back-countdiown" th:object="${statisticsTableModel}">
             <li>
@@ -42,6 +43,6 @@
         </ul>
 
     </section>
-
+</div>
 </body>
 </html>
