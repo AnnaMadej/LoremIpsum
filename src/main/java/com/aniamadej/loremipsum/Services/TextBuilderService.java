@@ -1,5 +1,5 @@
 package com.aniamadej.loremipsum.Services;
-import com.aniamadej.loremipsum.Models.Dtos.TextSchemeModel;
+import com.aniamadej.loremipsum.Models.TextScheme;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,28 +14,28 @@ public class TextBuilderService {
     @Autowired
     ContentCounterService contentCounterService;
 
-    public List<StringBuilder> buildText(TextSchemeModel textSchemeModel){
+    public List<StringBuilder> buildText(TextScheme textScheme){
         List<StringBuilder> text = new ArrayList<>();
         StringBuilder paragraph;
-        paragraph = buildParagraph(textSchemeModel);
+        paragraph = buildParagraph(textScheme);
         text.add(paragraph);
-        addStartingPhrase(paragraph, textSchemeModel.getWordsType().getStartingPhrase());
+        addStartingPhrase(paragraph, textScheme.getWordsType().getStartingPhrase());
 
-        for (int i = 1 ; i <  textSchemeModel.getTotalParagraphs(); i++){
-            paragraph = buildParagraph(textSchemeModel);
+        for (int i = 1; i <  textScheme.getTotalParagraphs(); i++){
+            paragraph = buildParagraph(textScheme);
             text.add(paragraph);
         }
-        contentCounterService.incNumberOfParagraphs(textSchemeModel.getTotalParagraphs());
+        contentCounterService.incNumberOfParagraphs(textScheme.getTotalParagraphs());
         return text;
     }
 
-    public StringBuilder buildParagraph(TextSchemeModel textSchemeModel){
+    public StringBuilder buildParagraph(TextScheme textScheme){
 
         StringBuilder paragraph = new StringBuilder();
         SecureRandom rand = new SecureRandom();
-        int numbeOfSentences = rand.nextInt(textSchemeModel.getMaxParSize())+textSchemeModel.getMinParSize();
+        int numbeOfSentences = rand.nextInt(textScheme.getMaxParSize())+ textScheme.getMinParSize();
         for (int i = 0; i<numbeOfSentences; i++){
-            paragraph.append(buildSentence(textSchemeModel));
+            paragraph.append(buildSentence(textScheme));
         }
         contentCounterService.incNumberOfSentences(numbeOfSentences);
         return paragraph;
@@ -47,18 +47,18 @@ public class TextBuilderService {
         contentCounterService.incNumberOfWords(phrase.split("\\w+").length);
     }
 
-    public StringBuilder buildSentence(TextSchemeModel textSchemeModel){
+    public StringBuilder buildSentence(TextScheme textScheme){
         StringBuilder sentence = new StringBuilder();
         SecureRandom rand = new SecureRandom();
-        int numberOfWords = rand.nextInt(textSchemeModel.getMaxSenSize())+textSchemeModel.getMinSenSize();
+        int numberOfWords = rand.nextInt(textScheme.getMaxSenSize())+ textScheme.getMinSenSize();
 
-        sentence.append(textSchemeModel.getWordsType().getRandomWord());
+        sentence.append(textScheme.getWordsType().getRandomWord());
         sentence.setCharAt(0, Character.toUpperCase( sentence.charAt(0)));
 
 
         for (int i = 1; i<numberOfWords; i++){
             sentence.append(drawComma());
-            sentence.append(textSchemeModel.getWordsType().getRandomWord());
+            sentence.append(textScheme.getWordsType().getRandomWord());
         }
         sentence.append(drawPunctationMark());
         sentence.append(" ");

@@ -1,12 +1,13 @@
 package com.aniamadej.loremipsum.Controllers;
 import com.aniamadej.loremipsum.Models.Entities.GeneratedTextDescriptionEntity;
 import com.aniamadej.loremipsum.Models.Forms.LoremFormModel;
-import com.aniamadej.loremipsum.Models.Dtos.TextSchemeModel;
+import com.aniamadej.loremipsum.Models.TextScheme;
 import com.aniamadej.loremipsum.Repositories.GeneratedTextDescriptionRepository;
 import com.aniamadej.loremipsum.Services.ContentCounterService;
 import com.aniamadej.loremipsum.Services.TextBuilderService;
-import com.aniamadej.loremipsum.Models.Dtos.StatisticsTableModel;
+import com.aniamadej.loremipsum.Models.Dtos.StatisticsModel;
 import com.aniamadej.loremipsum.Services.FormToTextSchemeMapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,10 +38,10 @@ public class MainController {
     @GetMapping("/")
     public String index(Model model){
         model.addAttribute("loremFormModel", new LoremFormModel());
-        Integer numberOfWordsSum = generatedTextDescriptionRepository.getNumberOfWordsSum();
-        Integer numberOfSentencesSum = generatedTextDescriptionRepository.getNumberOfSentencesSum();
-        Integer numberOfParagraphsSum = generatedTextDescriptionRepository.getNumberOfParagraphsSum();
-        model.addAttribute("statisticsTableModel", new StatisticsTableModel(numberOfWordsSum, numberOfSentencesSum, numberOfParagraphsSum));
+        int numberOfWords = generatedTextDescriptionRepository.getNumberOfWordsSum();
+        int numberOfSentences = generatedTextDescriptionRepository.getNumberOfSentencesSum();
+        int numberOfParagraphs = generatedTextDescriptionRepository.getNumberOfParagraphsSum();
+        model.addAttribute("statisticsTableModel", new StatisticsModel(numberOfWords, numberOfSentences, numberOfParagraphs));
         return "index";
     }
 
@@ -52,21 +53,25 @@ public class MainController {
         }
         else {
             model.addAttribute("error", false );
-            TextSchemeModel textSchemeModel = formToTextSchemeMapper.mapp(loremFormModel);
-            List<StringBuilder> text = textBuilderService.buildText(textSchemeModel);
+            TextScheme textScheme = formToTextSchemeMapper.mapp(loremFormModel);
+            List<StringBuilder> text = textBuilderService.buildText(textScheme);
 
             model.addAttribute("paragraphs", text);
-
 
             GeneratedTextDescriptionEntity generatedTextDescription = new GeneratedTextDescriptionEntity();
             generatedTextDescription.setNumberOfWords(contentCounterService.getNumberOfWords());
             generatedTextDescription.setNumberOfSentences(contentCounterService.getNumberOfSentences());
             generatedTextDescription.setNumberOfParagraphs(contentCounterService.getNumberOfParagraphs());
-            model.addAttribute("generatedTextModel", generatedTextDescription);
             generatedTextDescriptionRepository.save(generatedTextDescription);
+
+            StatisticsModel textStatistics = new StatisticsModel();
+            ModelMapper statisticsToDto = new ModelMapper();
+            statisticsToDto.map(generatedTextDescription, textStatistics);
+
+            model.addAttribute("textStatistics", textStatistics);
         }
 
-        model.addAttribute("statisticsTableModel", new StatisticsTableModel(generatedTextDescriptionRepository.getNumberOfWordsSum(), generatedTextDescriptionRepository.getNumberOfSentencesSum(), generatedTextDescriptionRepository.getNumberOfParagraphsSum()));
+        model.addAttribute("statisticsTableModel", new StatisticsModel(generatedTextDescriptionRepository.getNumberOfWordsSum(), generatedTextDescriptionRepository.getNumberOfSentencesSum(), generatedTextDescriptionRepository.getNumberOfParagraphsSum()));
         return "index";
     }
 }

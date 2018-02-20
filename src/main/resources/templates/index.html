@@ -56,9 +56,9 @@
         <div id="paragraphs" th:if="${error==false}">
             <div id="generatorHeader">
                 <div class="left">
-                <p><span th:text="#{words_message} + ': ' + ${generatedTextModel.getNumberOfWords()} + ',  '" ></span>
-                <span th:text="#{sentences_message} + ': ' + ${generatedTextModel.getNumberOfSentences()} + ',  '" ></span>
-                <span th:text="#{paragraphs_message} + ': ' + ${generatedTextModel.getNumberOfParagraphs()} + '.  '"></span></p>
+                <p><span th:text="#{words_message} + ': ' + ${textStatistics.getNumberOfWords()} + ',  '" ></span>
+                <span th:text="#{sentences_message} + ': ' + ${textStatistics.getNumberOfSentences()} + ',  '" ></span>
+                <span th:text="#{paragraphs_message} + ': ' + ${textStatistics.getNumberOfParagraphs()} + '.  '"></span></p>
                 <p><button id="button1" onclick="CopyToClipboard('generatorBody')" th:text="#{copy_message}"></button></p>
                 </div>
                 <div class="right">
@@ -113,15 +113,15 @@
         <p th:text="#{already_generated_message} + ': '"></p>
         <ul id="back-countdiown" th:object="${statisticsTableModel}">
             <li>
-                <span class="paragraphs" th:text="*{sumOfParagraphs}"></span>
+                <span class="paragraphs" th:text="*{numberOfParagraphs}"></span>
                 <p th:text="#{paragraphs_message}"></p>
             </li>
             <li>
-                <span class="sentences" th:text="*{sumOfSentences}">0</span>
+                <span class="sentences" th:text="*{numberOfSentences}">0</span>
                 <p th:text="#{sentences_message}" > </p>
             </li>
             <li>
-                <span class="words" th:text="*{sumOfWords}"></span>
+                <span class="words" th:text="*{numberOfWords}"></span>
                 <p th:text="#{words_message}"></p>
             </li>
         </ul>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Lorem ipsum generator</title>
+
+    <!-- web-fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <!-- font-awesome -->
+    <link th:href="@{/fonts/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+    <!-- Style CSS -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+    <![endif]-->
+
+    <script type="text/javascript">
+
+        function CopyToClipboard(containerid) {
+            if (document.selection) {
+                var range = document.body.createTextRange();
+                range.moveToElementText(document.getElementById(containerid));
+                range.select().createTextRange();
+                document.execCommand("copy");
+
+            } else if (window.getSelection) {
+                var range = document.createRange();
+                range.selectNode(document.getElementById(containerid));
+                window.getSelection().addRange(range);
+                document.execCommand("copy");
+            }}
+
+    </script>
+</head>
+<body>
+<div class="fullscreen-bg">
+    <video loop muted autoplay th:poster="@{/img/videoframe.jpg}" class="fullscreen-bg__video">
+        <source th:src="@{/img/video-bg.mp4}" type="video/mp4">
+    </video>
+</div> <!-- .fullscreen-bg -->
+<section class="wraper">
+    <header class="header">
+        <h1><a th:href="@{/}">LOREM IPSUM</a></h1>
+        <h2>GENERATOR</h2>
+    </header>
+    <!-- .header -->
+    <section class="generator">
+        <div id="paragraphs">
+            <div id="generatorBody">
+               <table>
+                   <thead>
+                   <tr>
+                       <th>  Czas </th>
+                       <th>  Paragrafów</th>
+                       <th>  Zdań</th>
+                       <th>  Słów</th>
+
+                   </tr>
+                   <tr th:each="text : ${texts}">
+                       <td th:text="${text.added}"> </td>
+                       <td th:text="${text.numberOfParagraphs}"> </td>
+                       <td th:text="${text.numberOfSentences}"> </td>
+                       <td th:text="${text.numberOfWords}"> </td>
+                   </tr>
+
+                   </thead>
+               </table>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+
+        <section class="social-links">
+            <ul>
+                <li><a href="https://github.com/AnnaMadej/loremipsum" target="_blank"><i class="fa fa-github fa-2x"></i></a></li>
+            </ul>
+        </section><!-- /.social-links -->
+
+    </footer>
+</section>
+
+
+
+
+</body>
+</html>

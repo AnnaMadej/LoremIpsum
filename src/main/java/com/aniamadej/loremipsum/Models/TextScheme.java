@@ -1,10 +1,10 @@
-package com.aniamadej.loremipsum.Models.Dtos;
+package com.aniamadej.loremipsum.Models;
 
 import com.aniamadej.loremipsum.Models.Words;
 import lombok.Getter;
 import lombok.Setter;
 
-public class TextSchemeModel {
+public class TextScheme {
 
     @Getter
     Words wordsType;
@@ -25,7 +25,7 @@ public class TextSchemeModel {
     @Setter
     int maxSenSize;
 
-    public TextSchemeModel(Words wordsType, int totalParagraphs, int minParSize, int maxParSize, int minSenSize, int maxSenSize) {
+    public TextScheme(Words wordsType, int totalParagraphs, int minParSize, int maxParSize, int minSenSize, int maxSenSize) {
         this.wordsType = wordsType;
         this.totalParagraphs = totalParagraphs;
         this.minParSize = minParSize;
