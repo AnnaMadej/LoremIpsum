@@ -11,13 +11,13 @@ import java.security.SecureRandom;
 @Qualifier("PARAGRAPH_BUILDER")
 public class ParagraphBuilderService implements LoremBuilder<StringBuilder>{
 
-    private ContentCounterService contentCounterService;
+    private TextContentCounter textContentCounter;
     private  LoremBuilder<StringBuilder>  loremBuilder;
 
     @Autowired
-    public ParagraphBuilderService(ContentCounterService contentCounterService,
+    public ParagraphBuilderService(TextContentCounter textContentCounter,
                                    @Qualifier("SENTENCE_BUILDER") LoremBuilder loremBuilder) {
-        this.contentCounterService = contentCounterService;
+        this.textContentCounter = textContentCounter;
         this.loremBuilder = loremBuilder;
     }
 
@@ -29,7 +29,7 @@ public class ParagraphBuilderService implements LoremBuilder<StringBuilder>{
         for (int i = 0; i<numbeOfSentences; i++){
             paragraph.append(loremBuilder.build(textScheme));
         }
-        contentCounterService.incNumberOfSentences(numbeOfSentences);
+        textContentCounter.incNumberOfSentences(numbeOfSentences);
         return paragraph;
     }
 

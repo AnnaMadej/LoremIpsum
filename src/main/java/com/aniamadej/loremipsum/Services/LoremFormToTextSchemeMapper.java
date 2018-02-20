@@ -4,14 +4,12 @@ import com.aniamadej.loremipsum.Models.Forms.LoremFormModel;
 import com.aniamadej.loremipsum.Models.Size;
 import com.aniamadej.loremipsum.Models.TextScheme;
 import com.aniamadej.loremipsum.Models.Words;
-import org.apache.catalina.mapper.Mapper;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.spi.Mapping;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FormToTextSchemeMapper {
+public class LoremFormToTextSchemeMapper implements LoremFormMapper {
 
+    @Override
     public TextScheme mapp(LoremFormModel loremFormModel){
 
         TextScheme textScheme = new TextScheme(

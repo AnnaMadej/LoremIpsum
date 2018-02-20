@@ -11,11 +11,11 @@ import java.security.SecureRandom;
 @Qualifier("SENTENCE_BUILDER")
 public class SentenceBuilderService implements LoremBuilder<StringBuilder>{
 
-    private ContentCounterService contentCounterService;
+    private TextContentCounter textContentCounter;
 
     @Autowired
-    public SentenceBuilderService(ContentCounterService contentCounterService) {
-        this.contentCounterService = contentCounterService;
+    public SentenceBuilderService(TextContentCounter textContentCounter) {
+        this.textContentCounter = textContentCounter;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class SentenceBuilderService implements LoremBuilder<StringBuilder>{
         sentence.append(drawPunctationMark());
         sentence.append(" ");
 
-        contentCounterService.incNumberOfWords(numberOfWords);
+        textContentCounter.incNumberOfWords(numberOfWords);
         return sentence;
     }
 

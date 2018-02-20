@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,13 +12,13 @@ import java.util.List;
 @Qualifier("TEXT_BUILDER")
 public class TextBuilderService implements LoremBuilder<List<StringBuilder>>{
 
-    private ContentCounterService contentCounterService;
+    private TextContentCounter textContentCounter;
     private LoremBuilder<StringBuilder> loremBuilder;
 
     @Autowired
-    public TextBuilderService(ContentCounterService contentCounterService,
+    public TextBuilderService(TextContentCounter textContentCounter,
                               @Qualifier("PARAGRAPH_BUILDER") LoremBuilder loremBuilder) {
-        this.contentCounterService = contentCounterService;
+        this.textContentCounter = textContentCounter;
         this.loremBuilder = loremBuilder;
     }
 
@@ -34,7 +33,7 @@ public class TextBuilderService implements LoremBuilder<List<StringBuilder>>{
             paragraph = loremBuilder.build(textScheme);
             text.add(paragraph);
         }
-        contentCounterService.incNumberOfParagraphs(textScheme.getTotalParagraphs());
+        textContentCounter.incNumberOfParagraphs(textScheme.getTotalParagraphs());
         return text;
     }
 
@@ -42,7 +41,7 @@ public class TextBuilderService implements LoremBuilder<List<StringBuilder>>{
         String phrase = textScheme.getWordsType().getStartingPhrase();
         paragraph.setCharAt(0, Character.toLowerCase( paragraph.charAt(0)));
         paragraph.insert(0, phrase + " ");
-        contentCounterService.incNumberOfWords(phrase.split("\\w+").length);
+        textContentCounter.incNumberOfWords(phrase.split("\\w+").length);
     }
 
 

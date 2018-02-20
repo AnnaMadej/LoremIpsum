@@ -3,10 +3,10 @@ import com.aniamadej.loremipsum.Models.Entities.GeneratedTextDescriptionEntity;
 import com.aniamadej.loremipsum.Models.Forms.LoremFormModel;
 import com.aniamadej.loremipsum.Models.TextScheme;
 import com.aniamadej.loremipsum.Repositories.GeneratedTextDescriptionRepository;
-import com.aniamadej.loremipsum.Services.ContentCounterService;
+import com.aniamadej.loremipsum.Services.TextContentCounter;
 import com.aniamadej.loremipsum.Services.LoremBuilder;
 import com.aniamadej.loremipsum.Models.Dtos.StatisticsModel;
-import com.aniamadej.loremipsum.Services.FormToTextSchemeMapper;
+import com.aniamadej.loremipsum.Services.LoremFormMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,18 +25,18 @@ public class MainController {
 
     private GeneratedTextDescriptionRepository generatedTextDescriptionRepository;
     private LoremBuilder<List<StringBuilder>> loremBuilder;
-    private FormToTextSchemeMapper formToTextSchemeMapper;
-    private ContentCounterService contentCounterService;
+    private LoremFormMapper<TextScheme> loremFormMapper;
+    private TextContentCounter textContentCounter;
 
     @Autowired
     public MainController(GeneratedTextDescriptionRepository generatedTextDescriptionRepository,
                           @Qualifier("TEXT_BUILDER")LoremBuilder loremBuilder,
-                          FormToTextSchemeMapper formToTextSchemeMapper,
-                          ContentCounterService contentCounterService) {
+                          LoremFormMapper loremFormMapper,
+                          TextContentCounter textContentCounter) {
         this.generatedTextDescriptionRepository = generatedTextDescriptionRepository;
         this.loremBuilder = loremBuilder;
-        this.formToTextSchemeMapper = formToTextSchemeMapper;
-        this.contentCounterService = contentCounterService;
+        this.loremFormMapper = loremFormMapper;
+        this.textContentCounter = textContentCounter;
     }
 
     @GetMapping("/")
@@ -62,15 +62,15 @@ public class MainController {
         }
         else {
             model.addAttribute("error", false );
-            TextScheme textScheme = formToTextSchemeMapper.mapp(loremFormModel);
+            TextScheme textScheme = loremFormMapper.mapp(loremFormModel);
             List<StringBuilder> text = loremBuilder.build(textScheme);
 
             model.addAttribute("paragraphs", text);
 
             GeneratedTextDescriptionEntity generatedTextDescription = new GeneratedTextDescriptionEntity();
-            generatedTextDescription.setNumberOfWords(contentCounterService.getNumberOfWords());
-            generatedTextDescription.setNumberOfSentences(contentCounterService.getNumberOfSentences());
-            generatedTextDescription.setNumberOfParagraphs(contentCounterService.getNumberOfParagraphs());
+            generatedTextDescription.setNumberOfWords(textContentCounter.getNumberOfWords());
+            generatedTextDescription.setNumberOfSentences(textContentCounter.getNumberOfSentences());
+            generatedTextDescription.setNumberOfParagraphs(textContentCounter.getNumberOfParagraphs());
             generatedTextDescriptionRepository.save(generatedTextDescription);
 
             StatisticsModel textStatistics = new StatisticsModel();
