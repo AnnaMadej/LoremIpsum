@@ -17,5 +17,5 @@ public interface GeneratedTextDescriptionRepository extends CrudRepository<Gener
     @Query("SELECT SUM(numberOfParagraphs) from GeneratedTextDescriptionEntity ")
     Integer getNumberOfParagraphsSum();
 
-    List<GeneratedTextDescriptionEntity> findAll();
+    public List<GeneratedTextDescriptionEntity> findTop50ByOrderByAddedDesc();
 }

@@ -109,24 +109,9 @@
 
         </form>
     </section>
-    <section class="countdown-wrapper">
-        <p th:text="#{already_generated_message} + ': '"></p>
-        <ul id="back-countdiown" th:object="${statisticsTableModel}">
-            <li>
-                <span class="paragraphs" th:text="*{numberOfParagraphs}"></span>
-                <p th:text="#{paragraphs_message}"></p>
-            </li>
-            <li>
-                <span class="sentences" th:text="*{numberOfSentences}">0</span>
-                <p th:text="#{sentences_message}" > </p>
-            </li>
-            <li>
-                <span class="words" th:text="*{numberOfWords}"></span>
-                <p th:text="#{words_message}"></p>
-            </li>
-        </ul>
-    </section>
 
+
+    <section th:replace="/Fragments/statisticsTable :: statisticsTable"></section>
     <footer class="footer">
 
         <section class="social-links">

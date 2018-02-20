@@ -24,7 +24,7 @@ public class ListController {
 
     @GetMapping ("/list")
     public String generateList(Model model){
-        List<GeneratedTextDescriptionEntity> textsEntities = generatedTextDescriptionRepository.findAll();
+        List<GeneratedTextDescriptionEntity> textsEntities = generatedTextDescriptionRepository.findTop50ByOrderByAddedDesc();
         ModelMapper textsToDto = new ModelMapper();
         List<StatisticsModel> texts = new ArrayList<>();
         StatisticsModel statisticsModel;
@@ -35,6 +35,14 @@ public class ListController {
         }
         System.out.println(texts.get(0).getAdded());
         model.addAttribute("texts", texts);
+
+        int numberOfWords = generatedTextDescriptionRepository.getNumberOfWordsSum();
+        int numberOfSentences = generatedTextDescriptionRepository.getNumberOfSentencesSum();
+        int numberOfParagraphs = generatedTextDescriptionRepository.getNumberOfParagraphsSum();
+        model.addAttribute("statisticsTableModel", new StatisticsModel(numberOfWords, numberOfSentences, numberOfParagraphs));
+
+
+
         return "list";
     }
 }

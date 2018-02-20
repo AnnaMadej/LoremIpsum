@@ -54,7 +54,16 @@
     <!-- .header -->
     <section class="generator">
         <div id="paragraphs">
+            <div id="generatorHeader">
+                <div class="left">
+                    <p>Ostatnie zapytania: </p>
+                </div>
+                <div class="right">
+                    <a th:href="@{/}"><button aria-hidden="true" >&times;</button></a>
+                </div>
+            </div>
             <div id="generatorBody">
+
                <table>
                    <thead>
                    <tr>
@@ -77,6 +86,9 @@
         </div>
     </section>
 
+
+
+    <section th:replace="/Fragments/statisticsTable :: statisticsTable"></section>
     <footer class="footer">
 
         <section class="social-links">
