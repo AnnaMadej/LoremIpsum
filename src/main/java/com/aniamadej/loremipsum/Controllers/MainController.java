@@ -59,7 +59,7 @@ public class MainController {
         else {
             model.addAttribute("error", false );
             TextScheme textScheme = formToTextSchemeMapper.mapp(loremFormModel);
-            List<StringBuilder> text = textBuilderService.buildText(textScheme);
+            List<StringBuilder> text = textBuilderService.build(textScheme);
 
             model.addAttribute("paragraphs", text);
 
