@@ -10,7 +10,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name="text")
-public class GeneratedTextDescriptionModel {
+public class GeneratedTextDescriptionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int textId;

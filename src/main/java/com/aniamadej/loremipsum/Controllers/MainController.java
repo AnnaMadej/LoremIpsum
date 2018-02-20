@@ -1,5 +1,5 @@
 package com.aniamadej.loremipsum.Controllers;
-import com.aniamadej.loremipsum.Models.Entities.GeneratedTextDescriptionModel;
+import com.aniamadej.loremipsum.Models.Entities.GeneratedTextDescriptionEntity;
 import com.aniamadej.loremipsum.Models.Forms.LoremFormModel;
 import com.aniamadej.loremipsum.Models.Dtos.TextSchemeModel;
 import com.aniamadej.loremipsum.Repositories.GeneratedTextDescriptionRepository;
@@ -21,16 +21,18 @@ import java.util.List;
 @Controller
 public class MainController {
 
-    @Autowired
-    GeneratedTextDescriptionRepository generatedTextDescriptionRepository;
-    @Autowired
-    TextBuilderService textBuilderService;
+    private GeneratedTextDescriptionRepository generatedTextDescriptionRepository;
+    private TextBuilderService textBuilderService;
+    private FormToTextSchemeMapper formToTextSchemeMapper;
+    private ContentCounterService contentCounterService;
 
     @Autowired
-    FormToTextSchemeMapper formToTextSchemeMapper;
-
-    @Autowired
-    ContentCounterService contentCounterService;
+    public MainController(GeneratedTextDescriptionRepository generatedTextDescriptionRepository, TextBuilderService textBuilderService, FormToTextSchemeMapper formToTextSchemeMapper, ContentCounterService contentCounterService) {
+        this.generatedTextDescriptionRepository = generatedTextDescriptionRepository;
+        this.textBuilderService = textBuilderService;
+        this.formToTextSchemeMapper = formToTextSchemeMapper;
+        this.contentCounterService = contentCounterService;
+    }
 
     @GetMapping("/")
     public String index(Model model){
@@ -56,7 +58,7 @@ public class MainController {
             model.addAttribute("paragraphs", text);
 
 
-            GeneratedTextDescriptionModel generatedTextDescription = new GeneratedTextDescriptionModel();
+            GeneratedTextDescriptionEntity generatedTextDescription = new GeneratedTextDescriptionEntity();
             generatedTextDescription.setNumberOfWords(contentCounterService.getNumberOfWords());
             generatedTextDescription.setNumberOfSentences(contentCounterService.getNumberOfSentences());
             generatedTextDescription.setNumberOfParagraphs(contentCounterService.getNumberOfParagraphs());
