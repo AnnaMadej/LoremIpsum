@@ -249,7 +249,7 @@ input::-webkit-inner-spin-button {
     display: inline-block;
     box-sizing: border-box;
     color: black;
-    min-width: 400px;
+    min-width: 300px;
 }
 
 .lorem-form input:focus{
@@ -444,6 +444,7 @@ hr{
 }
 
 table {
+    font-size: 12px;
     border: 1px solid #ccc;
     border-collapse: collapse;
     margin: 0;
@@ -464,7 +465,6 @@ table td {
     text-align: center;
 }
 table th {
-    letter-spacing: .1em;
     text-transform: uppercase;
 }
 

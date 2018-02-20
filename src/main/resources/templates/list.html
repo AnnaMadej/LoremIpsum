@@ -67,10 +67,10 @@
                <table>
                    <thead>
                    <tr>
-                       <th>  Czas </th>
-                       <th>  Paragrafów</th>
-                       <th>  Zdań</th>
-                       <th>  Słów</th>
+                       <th th:text="#{time_message}"> </th>
+                       <th th:text="#{paragraphs_message}"> </th>
+                       <th th:text="#{sentences_message}" > </th>
+                       <th th:text="#{words_message}"> </th>
 
                    </tr>
                    <tr th:each="text : ${texts}">
