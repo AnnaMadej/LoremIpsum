@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface HistoricalTextDescriptionRepository extends CrudRepository<GeneratedTextDescriptionModel, Integer>{
+public interface GeneratedTextDescriptionRepository extends CrudRepository<GeneratedTextDescriptionModel, Integer>{
     @Query("SELECT SUM(numberOfWords) from GeneratedTextDescriptionModel ")
     Integer getNumberOfWordsSum();
 

@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -16,4 +17,7 @@ public class GeneratedTextDescriptionModel {
     private int numberOfWords;
     private int numberOfSentences;
     private int numberOfParagraphs;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date added = new Date();
 }

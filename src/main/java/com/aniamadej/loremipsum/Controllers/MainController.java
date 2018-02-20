@@ -2,7 +2,7 @@ package com.aniamadej.loremipsum.Controllers;
 import com.aniamadej.loremipsum.Models.Entities.GeneratedTextDescriptionModel;
 import com.aniamadej.loremipsum.Models.Forms.LoremFormModel;
 import com.aniamadej.loremipsum.Models.Dtos.TextSchemeModel;
-import com.aniamadej.loremipsum.Repositories.HistoricalTextDescriptionRepository;
+import com.aniamadej.loremipsum.Repositories.GeneratedTextDescriptionRepository;
 import com.aniamadej.loremipsum.Services.ContentCounterService;
 import com.aniamadej.loremipsum.Services.TextBuilderService;
 import com.aniamadej.loremipsum.Models.Dtos.StatisticsTableModel;
@@ -22,7 +22,7 @@ import java.util.List;
 public class MainController {
 
     @Autowired
-    HistoricalTextDescriptionRepository historicalTextDescriptionRepository;
+    GeneratedTextDescriptionRepository generatedTextDescriptionRepository;
     @Autowired
     TextBuilderService textBuilderService;
 
@@ -35,9 +35,9 @@ public class MainController {
     @GetMapping("/")
     public String index(Model model){
         model.addAttribute("loremFormModel", new LoremFormModel());
-        Integer numberOfWordsSum = historicalTextDescriptionRepository.getNumberOfWordsSum();
-        Integer numberOfSentencesSum = historicalTextDescriptionRepository.getNumberOfSentencesSum();
-        Integer numberOfParagraphsSum = historicalTextDescriptionRepository.getNumberOfParagraphsSum();
+        Integer numberOfWordsSum = generatedTextDescriptionRepository.getNumberOfWordsSum();
+        Integer numberOfSentencesSum = generatedTextDescriptionRepository.getNumberOfSentencesSum();
+        Integer numberOfParagraphsSum = generatedTextDescriptionRepository.getNumberOfParagraphsSum();
         model.addAttribute("statisticsTableModel", new StatisticsTableModel(numberOfWordsSum, numberOfSentencesSum, numberOfParagraphsSum));
         return "index";
     }
@@ -61,10 +61,10 @@ public class MainController {
             generatedTextDescription.setNumberOfSentences(contentCounterService.getNumberOfSentences());
             generatedTextDescription.setNumberOfParagraphs(contentCounterService.getNumberOfParagraphs());
             model.addAttribute("generatedTextModel", generatedTextDescription);
-            historicalTextDescriptionRepository.save(generatedTextDescription);
+            generatedTextDescriptionRepository.save(generatedTextDescription);
         }
 
-        model.addAttribute("statisticsTableModel", new StatisticsTableModel(historicalTextDescriptionRepository.getNumberOfWordsSum(), historicalTextDescriptionRepository.getNumberOfSentencesSum(), historicalTextDescriptionRepository.getNumberOfParagraphsSum()));
+        model.addAttribute("statisticsTableModel", new StatisticsTableModel(generatedTextDescriptionRepository.getNumberOfWordsSum(), generatedTextDescriptionRepository.getNumberOfSentencesSum(), generatedTextDescriptionRepository.getNumberOfParagraphsSum()));
         return "index";
     }
 }
