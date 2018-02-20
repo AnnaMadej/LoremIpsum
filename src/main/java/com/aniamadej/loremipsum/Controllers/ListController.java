@@ -27,19 +27,26 @@ public class ListController {
         List<GeneratedTextDescriptionEntity> textsEntities = generatedTextDescriptionRepository.findTop50ByOrderByAddedDesc();
         ModelMapper textsToDto = new ModelMapper();
         List<StatisticsModel> texts = new ArrayList<>();
-        StatisticsModel statisticsModel;
-        for (GeneratedTextDescriptionEntity textEntity : textsEntities){
-            statisticsModel = new StatisticsModel();
-            textsToDto.map(textEntity, statisticsModel);
-            texts.add(statisticsModel);
+
+        if (textsEntities.size()>0) {
+            StatisticsModel statisticsModel;
+            for (GeneratedTextDescriptionEntity textEntity : textsEntities) {
+                statisticsModel = new StatisticsModel();
+                textsToDto.map(textEntity, statisticsModel);
+                texts.add(statisticsModel);
+            }
         }
-        System.out.println(texts.get(0).getAdded());
         model.addAttribute("texts", texts);
 
-        int numberOfWords = generatedTextDescriptionRepository.getNumberOfWordsSum();
-        int numberOfSentences = generatedTextDescriptionRepository.getNumberOfSentencesSum();
-        int numberOfParagraphs = generatedTextDescriptionRepository.getNumberOfParagraphsSum();
-        model.addAttribute("statisticsTableModel", new StatisticsModel(numberOfWords, numberOfSentences, numberOfParagraphs));
+        StatisticsModel statisticsTableModel = new StatisticsModel();
+
+        if (generatedTextDescriptionRepository.getNumberOfWordsSum() != null) {
+            statisticsTableModel.setNumberOfWords(generatedTextDescriptionRepository.getNumberOfWordsSum());
+            statisticsTableModel.setNumberOfSentences(generatedTextDescriptionRepository.getNumberOfSentencesSum());
+            statisticsTableModel.setNumberOfParagraphs(generatedTextDescriptionRepository.getNumberOfParagraphsSum());
+        }
+
+        model.addAttribute("statisticsTableModel", statisticsTableModel);
 
 
 

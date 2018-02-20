@@ -38,10 +38,15 @@ public class MainController {
     @GetMapping("/")
     public String index(Model model){
         model.addAttribute("loremFormModel", new LoremFormModel());
-        int numberOfWords = generatedTextDescriptionRepository.getNumberOfWordsSum();
-        int numberOfSentences = generatedTextDescriptionRepository.getNumberOfSentencesSum();
-        int numberOfParagraphs = generatedTextDescriptionRepository.getNumberOfParagraphsSum();
-        model.addAttribute("statisticsTableModel", new StatisticsModel(numberOfWords, numberOfSentences, numberOfParagraphs));
+        StatisticsModel statisticsTableModel = new StatisticsModel();
+
+        if (generatedTextDescriptionRepository.getNumberOfWordsSum() != null) {
+            statisticsTableModel.setNumberOfWords(generatedTextDescriptionRepository.getNumberOfWordsSum());
+            statisticsTableModel.setNumberOfSentences(generatedTextDescriptionRepository.getNumberOfSentencesSum());
+            statisticsTableModel.setNumberOfParagraphs(generatedTextDescriptionRepository.getNumberOfParagraphsSum());
+        }
+
+        model.addAttribute("statisticsTableModel", statisticsTableModel);
         return "index";
     }
 
