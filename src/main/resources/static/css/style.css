@@ -67,7 +67,7 @@ a:focus {
     border-radius: 3px 3px 3px 3px;
     -webkit-border-radius: 3px 3px 3px 3px;
     -moz-border-radius: 3px 3px 3px 3px;
-    font-family: Verdana;
+    font-family: Verdana, serif;
     width: auto;
     height: auto;
     font-size: 11px;
@@ -238,7 +238,7 @@ input::-webkit-inner-spin-button {
     margin-bottom: 5%;
     text-align: justify;
     white-space: normal;
-    padding: 3%;
+    padding: 3% 3% 100px;
     border: 2px solid rgba(255,255,255,.5);
     width: 90%;
     height: 100%;
@@ -269,7 +269,7 @@ input::-webkit-inner-spin-button {
 }
 
 
-lorem-form fieldset, .lorem-form ul{
+.lorem-form fieldset, .lorem-form ul{
     margin:2%;
     padding: 0;
 }

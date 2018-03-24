@@ -1,11 +1,13 @@
 package com.aniamadej.loremipsum.Models.Forms;
 
-import lombok.Data;
+import lombok.*;
 import org.springframework.format.annotation.NumberFormat;
 
 import javax.validation.constraints.NotNull;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
 public class LoremFormModel {
     @NumberFormat
     @NotNull

@@ -3,6 +3,8 @@ package com.aniamadej.loremipsum.Models;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Arrays;
+
 @AllArgsConstructor
 
 public enum Size {
@@ -19,17 +21,12 @@ public enum Size {
     @Getter
     String name;
     @Getter
-    int min;
+    Integer min;
     @Getter
-    int max;
+    Integer max;
 
     public static Size getSizeFromName(String name){
-        for (Size size : Size.values()) {
-            if (size.name.equals(name)) {
-                return size;
-            }
-        }
-        return MIX_SEN_SIZE;
+        return Arrays.stream(Size.values()).filter(val-> val.name.equals(name)).findFirst().orElse(MIX_SEN_SIZE);
     }
 }
 

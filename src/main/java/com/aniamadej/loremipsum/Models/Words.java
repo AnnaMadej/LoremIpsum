@@ -2,6 +2,7 @@ package com.aniamadej.loremipsum.Models;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Arrays;
 import java.util.Random;
 
 @AllArgsConstructor
@@ -66,12 +67,7 @@ public enum Words {
     private String[] words;
 
     public static Words getTextFromName(String name) {
-        for (Words words : Words.values()) {
-            if (words.name.equals(name)) {
-                return words;
-            }
-        }
-        return Words.LOREM_IPSUM;
+        return Arrays.stream(Words.values()).filter(val-> val.name.equals(name)).findFirst().orElse(LOREM_IPSUM);
     }
 
     public String getRandomWord(){

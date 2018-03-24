@@ -6,36 +6,39 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
+import java.util.function.Supplier;
 
 @Service
 @Qualifier("SENTENCE_BUILDER")
-public class SentenceBuilderService implements LoremBuilder<StringBuilder>{
+public class SentenceBuilderService implements Supplier<StringBuilder> {
 
-    private TextContentCounter textContentCounter;
+    private TextContentCounterService textContentCounterService;
+    private TextSchemeService textSchemeService;
 
     @Autowired
-    public SentenceBuilderService(TextContentCounter textContentCounter) {
-        this.textContentCounter = textContentCounter;
+    public SentenceBuilderService(TextContentCounterService textContentCounterService,
+                                  TextSchemeService textSchemeService) {
+        this.textContentCounterService = textContentCounterService;
+        this.textSchemeService = textSchemeService;
     }
 
     @Override
-    public StringBuilder build(TextScheme textScheme) {
+    public StringBuilder get() {
         StringBuilder sentence = new StringBuilder();
         SecureRandom rand = new SecureRandom();
-        int numberOfWords = rand.nextInt(textScheme.getMaxSenSize())+ textScheme.getMinSenSize();
+        int numberOfWords = rand.nextInt(textSchemeService.getTextScheme().getMaxSenSize())+ textSchemeService.getTextScheme().getMinSenSize();
 
-        sentence.append(textScheme.getWordsType().getRandomWord());
+        sentence.append(textSchemeService.getTextScheme().getWordsType().getRandomWord());
         sentence.setCharAt(0, Character.toUpperCase( sentence.charAt(0)));
-
 
         for (int i = 1; i<numberOfWords; i++){
             sentence.append(drawComma());
-            sentence.append(textScheme.getWordsType().getRandomWord());
+            sentence.append(textSchemeService.getTextScheme().getWordsType().getRandomWord());
         }
         sentence.append(drawPunctationMark());
         sentence.append(" ");
 
-        textContentCounter.incNumberOfWords(numberOfWords);
+        textContentCounterService.setNumberOfWords(textContentCounterService.getNumberOfWords()+numberOfWords);
         return sentence;
     }
 

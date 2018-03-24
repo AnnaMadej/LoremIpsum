@@ -1,35 +1,38 @@
 package com.aniamadej.loremipsum.Services;
-
-import com.aniamadej.loremipsum.Models.TextScheme;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
+import java.util.function.Supplier;
 
 @Service
 @Qualifier("PARAGRAPH_BUILDER")
-public class ParagraphBuilderService implements LoremBuilder<StringBuilder>{
+public class ParagraphBuilderService implements Supplier<StringBuilder> {
 
-    private TextContentCounter textContentCounter;
-    private  LoremBuilder<StringBuilder>  loremBuilder;
+    private TextContentCounterService textContentCounterService;
+    private Supplier<StringBuilder> sentenceBuilder;
+    private TextSchemeService textSchemeService;
 
     @Autowired
-    public ParagraphBuilderService(TextContentCounter textContentCounter,
-                                   @Qualifier("SENTENCE_BUILDER") LoremBuilder loremBuilder) {
-        this.textContentCounter = textContentCounter;
-        this.loremBuilder = loremBuilder;
+    public ParagraphBuilderService(TextContentCounterService textContentCounterService,
+                                   @Qualifier("SENTENCE_BUILDER") Supplier<StringBuilder> sentenceBuilder,
+                                   TextSchemeService textSchemeService) {
+        this.textContentCounterService = textContentCounterService;
+        this.sentenceBuilder = sentenceBuilder;
+        this.textSchemeService = textSchemeService;
     }
 
     @Override
-    public StringBuilder build(TextScheme textScheme) {
+    public StringBuilder get() {
         StringBuilder paragraph = new StringBuilder();
         SecureRandom rand = new SecureRandom();
-        int numbeOfSentences = rand.nextInt(textScheme.getMaxParSize())+ textScheme.getMinParSize();
+        int numbeOfSentences = rand.nextInt(textSchemeService.getTextScheme().getMaxParSize())+ textSchemeService.getTextScheme().getMinParSize();
         for (int i = 0; i<numbeOfSentences; i++){
-            paragraph.append(loremBuilder.build(textScheme));
+            paragraph.append(sentenceBuilder.get());
         }
-        textContentCounter.incNumberOfSentences(numbeOfSentences);
+
+        textContentCounterService.setNumberOfSentences(textContentCounterService.getNumberOfSentences()+numbeOfSentences);
         return paragraph;
     }
 
