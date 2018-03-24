@@ -10,11 +10,10 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GeneratedTextStatsDto {
-    private int numberOfWords;
-    private int numberOfSentences;
-    private int numberOfParagraphs;
+    private Long numberOfWords;
+    private Long numberOfSentences;
+    private Long numberOfParagraphs;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date added = new Date();
+
 
 }

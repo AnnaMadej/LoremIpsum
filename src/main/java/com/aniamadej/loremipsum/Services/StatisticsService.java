@@ -1,7 +1,8 @@
 package com.aniamadej.loremipsum.Services;
+import com.aniamadej.loremipsum.Models.Dtos.GeneraratedTextStatsWithDateDto;
 import com.aniamadej.loremipsum.Models.Dtos.GeneratedTextStatsDto;
 import com.aniamadej.loremipsum.Models.Entities.GeneratedTextDescriptionEntity;
-import com.aniamadej.loremipsum.Repositories.GeneratedTextDescriptionRepository;
+import com.aniamadej.loremipsum.Models.Repositories.GeneratedTextDescriptionRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,14 +25,7 @@ public class StatisticsService {
     }
 
     public GeneratedTextStatsDto getSumOfGeneratedTexts(){
-
-        GeneratedTextStatsDto generatedTextsStatsDto = new GeneratedTextStatsDto();
-        if (generatedTextDescriptionRepository.getNumberOfWordsSum() != null) {
-            generatedTextsStatsDto.setNumberOfWords(generatedTextDescriptionRepository.getNumberOfWordsSum());
-            generatedTextsStatsDto.setNumberOfSentences(generatedTextDescriptionRepository.getNumberOfSentencesSum());
-            generatedTextsStatsDto.setNumberOfParagraphs(generatedTextDescriptionRepository.getNumberOfParagraphsSum());
-        }
-        return generatedTextsStatsDto;
+        return generatedTextDescriptionRepository.getSumsOfGeneratedTexts();
     }
 
     public GeneratedTextStatsDto getSingleGeneratedTextStats(){
@@ -51,14 +45,13 @@ public class StatisticsService {
         List<GeneratedTextStatsDto> texts = new ArrayList<>();
 
         if (textsEntities.size()>0) {
-            GeneratedTextStatsDto generatedTextsDto;
+            GeneraratedTextStatsWithDateDto generatedTextsDto;
             for (GeneratedTextDescriptionEntity textEntity : textsEntities) {
-                generatedTextsDto = new GeneratedTextStatsDto();
+                generatedTextsDto = new GeneraratedTextStatsWithDateDto();
                 modelMapper.map(textEntity, generatedTextsDto);
                 texts.add(generatedTextsDto);
             }
         }
-
         return texts;
     }
 
