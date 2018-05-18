@@ -26,7 +26,8 @@ public class SentenceBuilderService implements Supplier<StringBuilder> {
     public StringBuilder get() {
         StringBuilder sentence = new StringBuilder();
         SecureRandom rand = new SecureRandom();
-        int numberOfWords = rand.nextInt(textSchemeService.getTextScheme().getMaxSenSize())+ textSchemeService.getTextScheme().getMinSenSize();
+        int numberOfWords = rand.nextInt(
+                (textSchemeService.getTextScheme().getMaxSenSize() - textSchemeService.getTextScheme().getMinSenSize()) + 1) + textSchemeService.getTextScheme().getMinSenSize();
 
         sentence.append(textSchemeService.getTextScheme().getWordsType().getRandomWord());
         sentence.setCharAt(0, Character.toUpperCase( sentence.charAt(0)));
@@ -42,7 +43,7 @@ public class SentenceBuilderService implements Supplier<StringBuilder> {
         return sentence;
     }
 
-    public char drawPunctationMark(){
+    private static char drawPunctationMark(){
         SecureRandom rand = new SecureRandom();
         int randomValue = rand.nextInt(10);
 
@@ -51,7 +52,7 @@ public class SentenceBuilderService implements Supplier<StringBuilder> {
         else return '?';
     }
 
-    public String drawComma(){
+    private static String drawComma(){
         SecureRandom rand = new SecureRandom();
         int randomValue = rand.nextInt(10);
         if (randomValue==0) return ", ";

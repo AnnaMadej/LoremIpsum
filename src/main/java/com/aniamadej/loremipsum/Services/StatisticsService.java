@@ -28,7 +28,7 @@ public class StatisticsService {
         return generatedTextDescriptionRepository.getSumsOfGeneratedTexts();
     }
 
-    public GeneratedTextStatsDto getSingleGeneratedTextStats(){
+    public GeneratedTextStatsDto saveSingleGeneratedTextStats(){
         GeneratedTextDescriptionEntity generatedTextDescription = new GeneratedTextDescriptionEntity();
         generatedTextDescription.setNumberOfWords(textContentCounterService.getNumberOfWords());
         generatedTextDescription.setNumberOfSentences(textContentCounterService.getNumberOfSentences());

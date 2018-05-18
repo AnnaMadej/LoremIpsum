@@ -74,7 +74,7 @@
 
                     </tr>
                     <tr th:each="text : ${texts}">
-                        <td th:text="${#dates.format(text.added, 'yyyy-MM-dd HH:mm:ss')}"> </td>
+                        <td th:text="${#dates.format(text.added, 'yyyy-MM-dd hh:mm:ss')}"> </td>
                         <td th:text="${text.numberOfParagraphs}"> </td>
                         <td th:text="${text.numberOfSentences}"> </td>
                         <td th:text="${text.numberOfWords}"> </td>

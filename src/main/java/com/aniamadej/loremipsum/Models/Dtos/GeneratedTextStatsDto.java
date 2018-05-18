@@ -10,10 +10,9 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GeneratedTextStatsDto {
+
     private Long numberOfWords;
     private Long numberOfSentences;
     private Long numberOfParagraphs;
-
-
 
 }

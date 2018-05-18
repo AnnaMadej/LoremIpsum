@@ -23,5 +23,4 @@ public class LoremFormModel {
         this.senLength = "mixedSenSize";
     }
 
-
 }

@@ -47,7 +47,7 @@ public class MainController {
             model.addAttribute("error", false );
             textSchemeService.setTextScheme(loremFormModel);
             model.addAttribute("paragraphs", loremBuilder.get());
-            model.addAttribute("textStatistics", statisticsService.getSingleGeneratedTextStats());
+            model.addAttribute("textStatistics", statisticsService.saveSingleGeneratedTextStats());
         }
         model.addAttribute("statisticsTableModel", statisticsService.getSumOfGeneratedTexts());
         return "index";

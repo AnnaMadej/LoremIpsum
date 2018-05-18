@@ -26,5 +26,9 @@ public class TextSchemeService {
         this.textScheme = modelMapper.map(loremFormModel, TextScheme.class);
     }
 
+    public void setTextScheme(TextScheme textScheme){
+        this.textScheme = textScheme;
+    }
+
 
 }

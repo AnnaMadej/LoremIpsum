@@ -20,12 +20,14 @@ public class BasicConfig {
         Converter<LoremFormModel, TextScheme> loremFormModelTextSchemeConverter = new AbstractConverter<LoremFormModel, TextScheme>() {
             protected TextScheme convert(LoremFormModel loremFormModel) {
                 TextScheme ts = new TextScheme();
-                ts.setMaxParSize(Size.getSizeFromName(loremFormModel.getParLength()).getMax());
-                ts.setMinParSize(Size.getSizeFromName(loremFormModel.getParLength()).getMin());
-                ts.setMaxSenSize(Size.getSizeFromName(loremFormModel.getSenLength()).getMax());
-                ts.setMinSenSize(Size.getSizeFromName(loremFormModel.getSenLength()).getMin());
-                ts.setTotalParagraphs(loremFormModel.getNumberOf());
-                ts.setWordsType(Words.getTextFromName(loremFormModel.getContent()));
+                if (loremFormModel != null){
+                    ts.setMaxParSize(Size.getSizeFromName(loremFormModel.getParLength()).getMax());
+                    ts.setMinParSize(Size.getSizeFromName(loremFormModel.getParLength()).getMin());
+                    ts.setMaxSenSize(Size.getSizeFromName(loremFormModel.getSenLength()).getMax());
+                    ts.setMinSenSize(Size.getSizeFromName(loremFormModel.getSenLength()).getMin());
+                    ts.setTotalParagraphs(loremFormModel.getNumberOf());
+                    ts.setWordsType(Words.getTextFromName(loremFormModel.getContent()));
+                }
                return ts;
             }
         };
