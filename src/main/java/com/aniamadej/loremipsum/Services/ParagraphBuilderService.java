@@ -27,7 +27,10 @@ public class ParagraphBuilderService implements Supplier<StringBuilder> {
     public StringBuilder get() {
         StringBuilder paragraph = new StringBuilder();
         SecureRandom rand = new SecureRandom();
-        int numbeOfSentences = rand.nextInt(textSchemeService.getTextScheme().getMaxParSize())+ textSchemeService.getTextScheme().getMinParSize();
+
+        int numbeOfSentences = rand.nextInt(
+                (textSchemeService.getTextScheme().getMaxParSize() - textSchemeService.getTextScheme().getMinParSize()) + 1) + textSchemeService.getTextScheme().getMinParSize();
+
         for (int i = 0; i<numbeOfSentences; i++){
             paragraph.append(sentenceBuilder.get());
         }

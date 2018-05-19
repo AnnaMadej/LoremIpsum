@@ -1,13 +1,12 @@
 package com.aniamadej.loremipsum.Services;
 
-import com.aniamadej.loremipsum.Models.Forms.LoremFormModel;
 import com.aniamadej.loremipsum.Models.TextScheme;
 import com.aniamadej.loremipsum.Models.Words;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -34,11 +33,15 @@ public class SentenceBuilderServiceTest {
     @MockBean
     TextSchemeService textSchemeService;
 
+    @MockBean
+    TextContentCounterService textContentCounterService;
+
+
     @Test
     public void shouldReturnCertainNumberOfWords() {
 
         SecureRandom rand = new SecureRandom();
-        int numberOfWordsToGenerate = rand.nextInt(100);
+        int numberOfWordsToGenerate = rand.nextInt(100 - 1 + 1) + 1;
         TextScheme textScheme = new TextScheme(Words.LOREM_IPSUM, 1, 1, 1, numberOfWordsToGenerate, numberOfWordsToGenerate);
         Mockito.when(textSchemeService.getTextScheme()).thenReturn(textScheme);
         StringBuilder sentence = sentenceBuilderService.get();
@@ -48,15 +51,34 @@ public class SentenceBuilderServiceTest {
     }
 
     @Test
-    public void shouldEndWithPunctationMarkAndSpace() {
-        TextScheme textScheme = new TextScheme(Words.LOREM_IPSUM, 1, 1, 1, 1, 1);
+    public void shouldStartWithUpperCaseAndEndWithPunctationMarkAndSpace() {
+        TextScheme textScheme = new TextScheme(Words.LOREM_IPSUM, 1, 1, 1, 10, 30);
         Mockito.when(textSchemeService.getTextScheme()).thenReturn(textScheme);
         StringBuilder sentence = sentenceBuilderService.get();
-        int numberOfWords = sentence.toString().split(" ").length;
-        char lastChar= sentence.charAt(sentence.length()-2);
-        Assert.assertTrue(lastChar=='.'||lastChar=='!'||lastChar=='?');
-        char endingSpace= sentence.charAt(sentence.length()-1);
-        Assert.assertTrue(endingSpace==' ');
+        String ending= sentence.toString().substring(sentence.length()-2);
+        Assert.assertTrue(ending.matches("^[.!?]$"));
+        Assert.assertTrue(Character.isUpperCase(sentence.charAt(0)));
+    }
+
+    @Test
+    public void shouldntHaveTwoPunctationMarksNextToEachOther(){
+        TextScheme textScheme = new TextScheme(Words.LOREM_IPSUM, 1, 1, 1, 50, 50);
+        Mockito.when(textSchemeService.getTextScheme()).thenReturn(textScheme);
+        StringBuilder sentence = sentenceBuilderService.get();
+        Assert.assertFalse(sentence.toString().matches("^.*[.,?!][.,?!].*$"));
+    }
+
+    @Test
+    public void shouldAddNumberOfWordsToTextCounter(){
+
+        SecureRandom rand = new SecureRandom();
+        int numberOfWordsToGenerate = rand.nextInt(100 - 1 + 1) + 1;
+        TextScheme textScheme = new TextScheme(Words.LOREM_IPSUM, 1, 1, 1, numberOfWordsToGenerate, numberOfWordsToGenerate);
+        Mockito.when(textSchemeService.getTextScheme()).thenReturn(textScheme);
+        Mockito.when(textContentCounterService.getNumberOfWords()).thenReturn(3).thenCallRealMethod();
+
+        sentenceBuilderService.get();
+        Mockito.verify(textContentCounterService, Mockito.times(1)).setNumberOfWords(3+numberOfWordsToGenerate);
 
     }
 }
