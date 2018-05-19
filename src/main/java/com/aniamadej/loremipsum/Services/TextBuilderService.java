@@ -1,6 +1,8 @@
 package com.aniamadej.loremipsum.Services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,7 +12,10 @@ import java.util.function.Supplier;
 
 @Service
 @Qualifier("TEXT_BUILDER")
+@Scope(scopeName = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class TextBuilderService implements Supplier<List<StringBuilder>> {
+
+    List<StringBuilder> text = new ArrayList<>();
 
     private TextContentCounterService textContentCounterService;
     private Supplier<StringBuilder> paragraphBuilder;
@@ -26,11 +31,10 @@ public class TextBuilderService implements Supplier<List<StringBuilder>> {
     }
 
     public List<StringBuilder> get(){
-        List<StringBuilder> text = new ArrayList<>();
         StringBuilder paragraph;
         paragraph = paragraphBuilder.get();
         text.add(paragraph);
-        addStartingPhrase(text);
+        addStartingPhrase();
 
         for (int i = 1; i <  textSchemeService.getTextScheme().getTotalParagraphs(); i++){
             paragraph = paragraphBuilder.get();
@@ -41,7 +45,7 @@ public class TextBuilderService implements Supplier<List<StringBuilder>> {
         return text;
     }
 
-    public void addStartingPhrase(List<StringBuilder> text){
+    private void addStartingPhrase(){
         String phrase = textSchemeService.getTextScheme().getWordsType().getStartingPhrase();
         StringBuilder firstParagraph =  text.get(0);
         firstParagraph.setCharAt(0, Character.toLowerCase( firstParagraph.charAt(0)));

@@ -22,7 +22,6 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
-@AutoConfigureMockMvc
 public class ParagraphBuilderServiceTest {
 
     @MockBean

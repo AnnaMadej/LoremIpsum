@@ -31,8 +31,10 @@ public class StatisticsService {
     public GeneratedTextStatsDto saveSingleGeneratedTextStats(){
         GeneratedTextDescriptionEntity generatedTextDescription = new GeneratedTextDescriptionEntity();
         generatedTextDescription.setNumberOfWords(textContentCounterService.getNumberOfWords());
-        generatedTextDescription.setNumberOfSentences(textContentCounterService.getNumberOfSentences());
-        generatedTextDescription.setNumberOfParagraphs(textContentCounterService.getNumberOfParagraphs());
+        generatedTextDescription.setNumberOfSentences(textContentCounterService
+                                                      .getNumberOfSentences());
+        generatedTextDescription.setNumberOfParagraphs(textContentCounterService
+                                                       .getNumberOfParagraphs());
         generatedTextDescriptionRepository.save(generatedTextDescription);
 
         GeneratedTextStatsDto textStatistics = new GeneratedTextStatsDto();
@@ -41,7 +43,8 @@ public class StatisticsService {
     }
 
     public List<GeneratedTextStatsDto> getListOfGeneratedTexStats(){
-        List<GeneratedTextDescriptionEntity> textsEntities = generatedTextDescriptionRepository.findTop50ByOrderByAddedDesc();
+        List<GeneratedTextDescriptionEntity> textsEntities
+                = generatedTextDescriptionRepository.findTop50ByOrderByAddedDesc();
         List<GeneratedTextStatsDto> texts = new ArrayList<>();
 
         if (textsEntities.size()>0) {

@@ -6,25 +6,19 @@ import com.aniamadej.loremipsum.Models.Words;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-
 import java.security.SecureRandom;
 
-import static org.junit.Assert.*;
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
-@AutoConfigureMockMvc
 public class SentenceBuilderServiceTest {
 
     @Autowired
@@ -56,7 +50,7 @@ public class SentenceBuilderServiceTest {
         Mockito.when(textSchemeService.getTextScheme()).thenReturn(textScheme);
         StringBuilder sentence = sentenceBuilderService.get();
         String ending= sentence.toString().substring(sentence.length()-2);
-        Assert.assertTrue(ending.matches("^[.!?]$"));
+        Assert.assertTrue(ending.matches("^[.!?] $"));
         Assert.assertTrue(Character.isUpperCase(sentence.charAt(0)));
     }
 

@@ -29,13 +29,18 @@ public class ParagraphBuilderService implements Supplier<StringBuilder> {
         SecureRandom rand = new SecureRandom();
 
         int numbeOfSentences = rand.nextInt(
-                (textSchemeService.getTextScheme().getMaxParSize() - textSchemeService.getTextScheme().getMinParSize()) + 1) + textSchemeService.getTextScheme().getMinParSize();
+                (textSchemeService
+                        .getTextScheme()
+                        .getMaxParSize() - textSchemeService.getTextScheme().getMinParSize())
+                        + 1) + textSchemeService.getTextScheme().getMinParSize();
 
         for (int i = 0; i<numbeOfSentences; i++){
             paragraph.append(sentenceBuilder.get());
         }
 
-        textContentCounterService.setNumberOfSentences(textContentCounterService.getNumberOfSentences()+numbeOfSentences);
+        textContentCounterService
+                .setNumberOfSentences(textContentCounterService
+                                      .getNumberOfSentences()+numbeOfSentences);
         return paragraph;
     }
 
