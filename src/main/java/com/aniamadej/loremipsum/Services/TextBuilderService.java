@@ -41,7 +41,7 @@ public class TextBuilderService implements Supplier<List<StringBuilder>> {
             text.add(paragraph);
         }
 
-        textContentCounterService.setNumberOfParagraphs(textContentCounterService.getNumberOfParagraphs()+textSchemeService.getTextScheme().getTotalParagraphs());
+        addNumberOfParagraphsToCounter();
         return text;
     }
 
@@ -50,11 +50,15 @@ public class TextBuilderService implements Supplier<List<StringBuilder>> {
         StringBuilder firstParagraph =  text.get(0);
         firstParagraph.setCharAt(0, Character.toLowerCase( firstParagraph.charAt(0)));
         firstParagraph.insert(0, phrase + " ");
+        addNumberOfWordsToCounter(phrase);
+    }
+
+    private void addNumberOfWordsToCounter(String phrase) {
         textContentCounterService.setNumberOfWords(textContentCounterService.getNumberOfWords()+phrase.split("\\w+").length);
     }
 
-
-
-
+    private void addNumberOfParagraphsToCounter() {
+        textContentCounterService.setNumberOfParagraphs(textContentCounterService.getNumberOfParagraphs()+textSchemeService.getTextScheme().getTotalParagraphs());
+    }
 
 }

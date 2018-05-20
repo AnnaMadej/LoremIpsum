@@ -4,6 +4,7 @@ import com.aniamadej.loremipsum.Models.Forms.LoremFormModel;
 import com.aniamadej.loremipsum.Models.TextScheme;
 import com.aniamadej.loremipsum.Models.Words;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -24,6 +25,8 @@ import static org.junit.Assert.*;
 @ActiveProfiles("test")
 public class ParagraphBuilderServiceTest {
 
+    TextScheme textScheme = new TextScheme(Words.LOREM_IPSUM, 1, 1, 1, 1, 1);
+
     @MockBean
     TextSchemeService textSchemeService;
 
@@ -36,14 +39,17 @@ public class ParagraphBuilderServiceTest {
     @Autowired
     ParagraphBuilderService paragraphBuilderService;
 
+    @Before
+    public void buildSentences(){
+        Mockito.when(sentenceBuilderService.get()).thenReturn(new StringBuilder("Ala ma kota! "));
+    }
+
     @Test
     public void shouldReturnCertainNumberOfSentences() {
 
-        SecureRandom rand = new SecureRandom();
-        int numberOfSentencesToGenerate = rand.nextInt(100 - 1 + 1) + 1;
-        TextScheme textScheme = new TextScheme(Words.LOREM_IPSUM, 1, numberOfSentencesToGenerate, numberOfSentencesToGenerate, 3, 3);
+        int numberOfSentencesToGenerate = setNumberOfSentencesToGenerate();
         Mockito.when(textSchemeService.getTextScheme()).thenReturn(textScheme);
-        Mockito.when(sentenceBuilderService.get()).thenReturn(new StringBuilder("Ala ma kota! "));
+
         StringBuilder paragraph = paragraphBuilderService.get();
         int numberOfSentences = paragraph.toString().split("[.?!] ").length;
         Assert.assertEquals(numberOfSentencesToGenerate, numberOfSentences);
@@ -53,17 +59,24 @@ public class ParagraphBuilderServiceTest {
     @Test
     public void shouldAddNumberOfSentencesToTextCounter(){
 
-        SecureRandom rand = new SecureRandom();
-        int numberOfSentencesToGenerate = rand.nextInt(100 - 1 + 1) + 1;
-        TextScheme textScheme = new TextScheme(Words.LOREM_IPSUM, 1, numberOfSentencesToGenerate, numberOfSentencesToGenerate, 0, 0);
+        int numberOfSentencesToGenerate = setNumberOfSentencesToGenerate();
         Mockito.when(textSchemeService.getTextScheme()).thenReturn(textScheme);
-        Mockito.when(sentenceBuilderService.get()).thenReturn(new StringBuilder("Ala ma kota! "));
         Mockito.when(textContentCounterService.getNumberOfSentences()).thenReturn(3);
-
         paragraphBuilderService.get();
         Mockito.verify(textContentCounterService, Mockito.times(1)).setNumberOfSentences(3+numberOfSentencesToGenerate);
 
     }
+
+
+
+    private int setNumberOfSentencesToGenerate() {
+        SecureRandom rand = new SecureRandom();
+        int numberOfSentencesToGenerate = rand.nextInt(100 - 1 + 1) + 1;
+        textScheme.setMaxParSize(numberOfSentencesToGenerate);
+        textScheme.setMinParSize(numberOfSentencesToGenerate);
+        return numberOfSentencesToGenerate;
+    }
+
 
 
 }
