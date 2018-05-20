@@ -1,5 +1,5 @@
 package com.aniamadej.loremipsum.Services;
-import com.aniamadej.loremipsum.Models.Dtos.GeneraratedTextStatsWithDateDto;
+import com.aniamadej.loremipsum.Models.Dtos.GeneratedTextStatsWithDateDto;
 import com.aniamadej.loremipsum.Models.Dtos.GeneratedTextStatsDto;
 import com.aniamadej.loremipsum.Models.Entities.GeneratedTextDescriptionEntity;
 import com.aniamadej.loremipsum.Models.Repositories.GeneratedTextDescriptionRepository;
@@ -42,21 +42,22 @@ public class StatisticsService {
         return textStatistics;
     }
 
-    public List<GeneratedTextStatsDto> getListOfGeneratedTexStats(){
+    public List<GeneratedTextStatsWithDateDto> getListOfGeneratedTexStats(){
         List<GeneratedTextDescriptionEntity> textsEntities
                 = generatedTextDescriptionRepository.findTop50ByOrderByAddedDesc();
-        List<GeneratedTextStatsDto> texts = new ArrayList<>();
+        List<GeneratedTextStatsWithDateDto> textsStats = new ArrayList<>();
 
         if (textsEntities.size()>0) {
-            GeneraratedTextStatsWithDateDto generatedTextsDto;
+            GeneratedTextStatsWithDateDto generatedTextsDto;
             for (GeneratedTextDescriptionEntity textEntity : textsEntities) {
-                generatedTextsDto = new GeneraratedTextStatsWithDateDto();
+                generatedTextsDto = new GeneratedTextStatsWithDateDto();
                 modelMapper.map(textEntity, generatedTextsDto);
-                texts.add(generatedTextsDto);
+                textsStats.add(generatedTextsDto);
             }
         }
-        return texts;
+        return textsStats;
     }
+
 
 
 }

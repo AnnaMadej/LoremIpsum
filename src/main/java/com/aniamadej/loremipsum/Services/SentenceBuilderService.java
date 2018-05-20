@@ -1,6 +1,4 @@
 package com.aniamadej.loremipsum.Services;
-
-import com.aniamadej.loremipsum.Models.TextScheme;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -39,7 +37,9 @@ public class SentenceBuilderService implements Supplier<StringBuilder> {
 
         for (int i = 1; i<numberOfWords; i++){
             sentence.append(drawComma());
-            sentence.append(textSchemeService.getTextScheme().getWordsType().getRandomWord());
+            sentence.append(textSchemeService.getTextScheme()
+                    .getWordsType()
+                    .getRandomWord());
         }
         sentence.append(drawPunctationMark());
         sentence.append(" ");

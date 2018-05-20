@@ -8,6 +8,6 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-public class GeneraratedTextStatsWithDateDto extends GeneratedTextStatsDto {
+public class GeneratedTextStatsWithDateDto extends GeneratedTextStatsDto {
     private Date added = new Date();
 }

@@ -9,10 +9,16 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class GeneratedTextStatsDto {
 
-    private Long numberOfWords;
-    private Long numberOfSentences;
-    private Long numberOfParagraphs;
+    private int numberOfWords;
+    private int numberOfSentences;
+    private int numberOfParagraphs;
 
+    public GeneratedTextStatsDto(Long numberOfWords, Long numberOfSentences, Long numberOfParagraphs) {
+        this.numberOfWords = numberOfWords.intValue();
+        this.numberOfSentences = numberOfSentences.intValue();
+        this.numberOfParagraphs = numberOfParagraphs.intValue();
+    }
 }
